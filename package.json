@@ -1,6 +1,6 @@
 {
   "name": "replication",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "An ESNext REPL for interacting with your node app",
   "license": "MIT",
   "repository": "vincecoppola/replication",
@@ -10,7 +10,11 @@
     "url": "github.com/vincecoppola"
   },
   "bin": {
-    "repl": "./index.js"
+    "repl": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "babel -D src --out-dir dist",
+    "prepublish": "npm run build"
   },
   "dependencies": {
     "app-module-path": "^2.2.0",
