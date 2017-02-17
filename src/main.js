@@ -9,8 +9,11 @@ import {
   isRecoverableError,
   loadPreviousImports,
   preprocess,
+  readlineHistory,
   run,
 } from './helpers';
+
+loadPreviousImports();
 
 async function myEval(cmd, context, filename, cb) {
   let res;
@@ -35,8 +38,8 @@ const REPL = repl.start({
   useGlobal: true,
 });
 
+readlineHistory(REPL, `.readline_history`);
+
 // Skip the stupid '_' assignment warning
 REPL.underscoreAssigned = true;
 REPL.context._ = require('lodash');
-
-loadPreviousImports();
