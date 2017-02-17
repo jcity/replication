@@ -14,22 +14,24 @@ import {
 loadPreviousImports()
 
 async function myEval(cmd, context, filename, cb) {
+  let res;
   try {
-    await Promise
-      .resolve(run(cmd))
-      .then(res => {
-        collectImports(cmd);
-        cb(null, res);
-      });
+    res = await run(cmd);
+    collectImports(cmd);
   } catch (e) {
-    console.log(chalk.red(e));
-    cb();
+    try {
+      repl.repl._tabComplete();
+    } catch(e) {
+      console.log(chalk.red(e));
+      return cb(new repl.Recoverable(e));
+    }
   }
+  cb(null, res);
 }
 
 repl.start({ 
   prompt: '> ', 
   eval: myEval,
   ignoreUndefined: true,
-  // useGlobal: true,
+  useGlobal: true,
 }).context = global;

@@ -9,7 +9,9 @@ const pathExists = require('path-exists');
 const fs = require('fs');
 reqPath(__dirname);
 fs.writeFileSync(`${__dirname}/history.js`, `\n`, { flag: `a` });
-fs.writeFileSync(`${__dirname}/paths.json`, ``, { flag: `a` });
+if (!pathExists.sync(`${__dirname}/paths.json`)) {
+  fs.writeFileSync(`${__dirname}/paths.json`, JSON.stringify([], null, 2));
+}
 
 const extraPaths = process.argv.slice(2);
 const paths = [ ...new Set(extraPaths.concat(require(`./paths`))) ];
