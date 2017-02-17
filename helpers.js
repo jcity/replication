@@ -33,7 +33,7 @@ export function watcher({ key, path }) {
 }
 
 export function collectImports(code) {
-  const importRe = new RegExp(/^import\s.*/gm);
+  const importRe = new RegExp(/(^import\s.*|require\()/gm);
   const lines = code.split(`\n`);
   _.forEach(lines, line => {
     if (importRe.test(line)) {
