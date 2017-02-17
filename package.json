@@ -13,7 +13,7 @@
     "repl": "./dist/index.js"
   },
   "scripts": {
-    "build": "babel -D src --out-dir dist",
+    "build": "babel src --out-dir dist",
     "prepublish": "npm run build"
   },
   "dependencies": {

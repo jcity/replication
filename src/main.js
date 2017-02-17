@@ -19,7 +19,7 @@ async function myEval(cmd, context, filename, cb) {
       .resolve(run(cmd))
       .then(res => {
         collectImports(cmd);
-        cb.bind(this, null)(res);
+        cb(null, res);
       });
   } catch (e) {
     console.log(chalk.red(e));
@@ -31,4 +31,5 @@ repl.start({
   prompt: '> ', 
   eval: myEval,
   ignoreUndefined: true,
+  // useGlobal: true,
 }).context = global;

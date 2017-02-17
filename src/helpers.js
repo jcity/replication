@@ -66,7 +66,7 @@ export function loadPreviousImports() {
   _.forEach(historicImports, i => {
     try { 
       const before = _.keys(require.cache);
-      eval(transpile(i));
+      run(i);
       let path = _.head(_.compact(_.pullAll(_.keys(require.cache), before)));
       if (path) {
         if (indexRe.test(path)) {
