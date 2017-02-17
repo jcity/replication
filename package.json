@@ -1,7 +1,7 @@
 {
   "name": "replication",
-  "version": "0.0.1",
-  "description": "A REPL for accessing your API",
+  "version": "0.0.2",
+  "description": "An ESNext REPL for interacting with your node app",
   "license": "MIT",
   "repository": "vincecoppola/replication",
   "author": {
