@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-require('babel-register');
+import 'babel-register';
 
 global._selfGlobal = global;
 

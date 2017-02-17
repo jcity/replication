@@ -6,12 +6,11 @@ import repl from 'repl';
 import {
   collectImports,
   deletePaths,
+  isRecoverableError,
   loadPreviousImports,
   preprocess,
   run,
 } from './helpers';
-
-loadPreviousImports()
 
 async function myEval(cmd, context, filename, cb) {
   let res;
@@ -19,19 +18,25 @@ async function myEval(cmd, context, filename, cb) {
     res = await run(cmd);
     collectImports(cmd);
   } catch (e) {
-    try {
-      repl.repl._tabComplete();
-    } catch(e) {
-      console.log(chalk.red(e));
+    if (isRecoverableError(e)) {
       return cb(new repl.Recoverable(e));
+    } else {
+      console.error(chalk.red(e.stack));
     }
   }
   cb(null, res);
 }
 
-repl.start({ 
+const REPL = repl.start({ 
   prompt: '> ', 
   eval: myEval,
   ignoreUndefined: true,
+  replMode: repl.REPL_MODE_MAGIC,
   useGlobal: true,
-}).context = global;
+});
+
+// Skip the stupid '_' assignment warning
+REPL.underscoreAssigned = true;
+REPL.context._ = require('lodash');
+
+loadPreviousImports();

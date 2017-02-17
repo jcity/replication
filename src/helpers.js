@@ -32,6 +32,13 @@ export function watcher({ key, path }) {
   });
 }
 
+export function isRecoverableError(error) {
+  if (error.name === 'SyntaxError') {
+    return /(Unexpected end of input|Unexpected token)/.test(error.message);
+  }
+  return false;
+}
+
 export function collectImports(code) {
   const importRe = new RegExp(/(^import\s.*|require\()/gm);
   const lines = code.split(`\n`);
